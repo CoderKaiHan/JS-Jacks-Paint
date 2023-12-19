@@ -2,37 +2,34 @@ function configureListeners() {
     let images = document.querySelectorAll('img')// select img elements  
 
 
-     for(var i = 0; i < images.length; i++) {        
-        images[i].addEventListener('mousemove',addOpacity
-        )
+     for(let i = 0; i < images.length; i++) {        
+        images[i].addEventListener('mouseover',addOpacity
+        );
         // iterate over images and add mouseover event listeners 
-        images[i].addEventListener('mouseout',function(event){
-            console.log('bye')
-        })     
-    } 
+        images[i].addEventListener('mouseout',removeOpacity);
+        images[i].addEventListener('mouseover', function () {
+            // Handle the click event to show color name and price
+            getProductInfo(images[i].id);   
+    }); 
 }
 
 function addOpacity(event) {
     // add appropriate CSS class
-    this.style.opacity(0.5);
-    getProductInfo(event.target.id);     
+    if(!this.classList.contains('dim')){
+        this.classList.add('dim')
+    }   
 }
 
 function removeOpacity(event) {
      //remove appropriate CSS class
-
-    let element = document.getElementById('color-price');
-        element.textContent = '';
-        
-    let color = document.getElementById('color-name');
-        color.textContent = ''; 
-
-    event.preventDefault();    
+    if(this.classList.contains('dim')){
+        this.classList.remove('dim')
+    } 
 }
 
 function getProductInfo(paintColor) {
     let price;
-    let colorName;  
+    let colorName;
     
     switch (paintColor) {
         case 'pn1':           
@@ -92,8 +89,7 @@ function getProductInfo(paintColor) {
           default:              
     }
 
-    function updatePrice(colorName, price)
-    {       
+    function updatePrice(colorName, price){       
         let colorPrice = document.getElementById('color-price');// select element with corresponding id
         // display price
         colorPrice.textContent = price;
@@ -103,4 +99,4 @@ function getProductInfo(paintColor) {
         color.textContent = colorName;
     }
     
-}
+}}
